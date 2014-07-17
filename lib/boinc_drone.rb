@@ -6,10 +6,10 @@ module BoincDrone
   class Report
     attr_accessor :api_key, :report, :webhook_url, :worker_id
     
-    def initialize
-      @api_key = ENV["API_KEY"] || "ABC123"
-      @webhook_url = ENV["WEBHOOK_URL"] || "http://localhost:3000"
-      @worker_id = ENV["WORKER_ID"] || "123456"
+    def initialize(api_key: "ABC123", webhook_url: "http://localhost:3000", worker_id: "123456")
+      @api_key = api_key
+      @webhook_url = webhook_url
+      @worker_id = worker_id
       
       @report = { 
         meta: {
