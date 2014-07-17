@@ -4,12 +4,16 @@ require "json"
 
 module BoincDrone
   class Report
-    attr_accessor :report
+    attr_accessor :api_key, :report, :webhook_url, :worker_id
     
     def initialize
+      @api_key = ENV["API_KEY"] || "ABC123"
+      @webhook_url = ENV["WEBHOOK_URL"] || "http://localhost:3000"
+      @worker_id = ENV["WORKER_ID"] || "123456"
+      
       @report = { 
         meta: {
-         worker_id: ENV["WORKER_ID"]
+         worker_id: @worker_id
         }
       }
 
@@ -40,12 +44,12 @@ module BoincDrone
     
     def post
       begin
-        result = HTTParty.post(ENV["WEBHOOK_URL"],
+        result = HTTParty.post(@webhook_url,
           body: { 
             report: @report
           },
           headers: {
-            "X-API-KEY" => ENV["API_KEY"]
+            "X-API-KEY" => @api_key
           }
         ).body
     
