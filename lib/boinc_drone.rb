@@ -44,22 +44,15 @@ module BoincDrone
     
     def post
       begin
-        result = HTTParty.post(@webhook_url,
+        HTTParty.post(@webhook_url,
           body: { 
             report: @report
           },
           headers: {
             "X-API-KEY" => @api_key
           }
-        ).body
-    
-        unless result.status == 200
-          sleep(60)
-          self.post
-        end
+        )
       rescue => e
-        sleep(60)
-        self.post
       end
     end
   end

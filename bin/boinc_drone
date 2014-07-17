@@ -23,5 +23,8 @@ end
 
 opt.parse
 
-report = BoincDrone::Report.new(params)
-report.post
+loop do
+  @report = BoincDrone::Report.new(params)
+  @report.post
+  sleep(60)
+end
