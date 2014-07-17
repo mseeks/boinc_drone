@@ -20,6 +20,7 @@ $ boinc_drone -a API_KEY -u WEBHOOK_URL -w WORKER_ID # worker_id is optional, it
 ## Usage
 Every 60 seconds this script will read the commandline output of the `boinccmd --get_state` and convert it to some nice JSON and `POST` it to the supplied `WEBHOOK_URL` with `API_KEY` set as an `X-API-KEY` header. If the `POST` fails for any reason it will fail silently and just keep looping.
 
+The request body's JSON:
 ```json
 {
   "meta":{
