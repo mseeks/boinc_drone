@@ -13,11 +13,11 @@ opt = OptionParser.new do |opt|
   end
 
   opt.on('-u', '--url URL', 'Webhook URL') do |url|
-    things[:webhook_url] = url
+    params[:webhook_url] = url
   end
   
   opt.on('-w', '--worker ID', 'Woker ID') do |id|
-    things[:worker_id] = id
+    params[:worker_id] = id
   end
 end
 
