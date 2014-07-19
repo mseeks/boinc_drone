@@ -6,25 +6,14 @@ $LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
 require "boinc_drone"
 require "optparse"
 
-params = {}
-opt = OptionParser.new do |opt|
-  opt.on('-k', '--key KEY', 'API key') do |key|
-    params[:api_key] = key
+OptionParser.new do |opts|
+  opts.on('-u', '--url URL', 'Webhook URL') do |url|
+    @webhook_url = url
   end
-
-  opt.on('-u', '--url URL', 'Webhook URL') do |url|
-    params[:webhook_url] = url
-  end
-  
-  opt.on('-w', '--worker ID', 'Woker ID') do |id|
-    params[:worker_id] = id
-  end
-end
-
-opt.parse
+end.parse!
 
 loop do
-  @report = BoincDrone::Report.new(*params)
-  @report.post
-  sleep(300)
+  @report = BoincDrone::Report.new(webhook_url: @webhook_url)
+  @report.post!
+  sleep(30)
 end

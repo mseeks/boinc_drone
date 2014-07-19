@@ -4,18 +4,11 @@ require "json"
 
 module BoincDrone
   class Report
-    attr_accessor :api_key, :report, :webhook_url, :worker_id
+    attr_accessor :report, :webhook_url
     
-    def initialize(api_key: "ABC123", webhook_url: "http://localhost:3000", worker_id: "123456")
-      @api_key = api_key
+    def initialize(webhook_url: "http://localhost:3000?worker_id=1&api_key=123")
       @webhook_url = webhook_url
-      @worker_id = worker_id
-      
-      @report = { 
-        meta: {
-         worker_id: @worker_id
-        }
-      }
+      @report = {}
 
       input = `boinccmd --get_state`
       input.each_line do |line|
@@ -42,18 +35,15 @@ module BoincDrone
       end
     end
     
-    def post
-      # begin
+    def post!
+      begin
         HTTParty.post(@webhook_url,
           body: { 
             report: @report
-          },
-          headers: {
-            "X-API-KEY" => @api_key
           }
         )
-      # rescue => e
-      # end
+      rescue => e
+      end
     end
   end
 end
