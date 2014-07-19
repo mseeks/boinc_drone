@@ -43,7 +43,7 @@ module BoincDrone
     end
     
     def post
-      begin
+      # begin
         HTTParty.post(@webhook_url,
           body: { 
             report: @report
@@ -52,8 +52,8 @@ module BoincDrone
             "X-API-KEY" => @api_key
           }
         )
-      rescue => e
-      end
+      # rescue => e
+      # end
     end
   end
 end
